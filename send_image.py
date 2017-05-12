@@ -210,14 +210,14 @@ if __name__ == "__main__":
 	
         bl.get_discoverable_devices()
 	
-        ##bl.pair("B8:27:EB:30:A8:38")
-        bl.connect("B8:27:EB:30:A8:38")
+        ##bl.pair("B8::27:EB:30:A8:38")
+        bl.connect("B8:27:EB:80:FB:37")
 	
 	stdoutdata = commands.getoutput("hcitool con")
 	print(stdoutdata.split())
 
 	##connection state check##
-	if "B8:27:EB:30:A8:38" in stdoutdata.split():
+	if "B8:27:EB:80:FB:37" in stdoutdata.split():
             print("success")
 
             ## Capture Image ##
@@ -240,7 +240,7 @@ if __name__ == "__main__":
      
             print("send image")
 
-            serverMACAddress = 'B8:27:EB:30:A8:38'
+            serverMACAddress = 'B8:27:EB:80:FB:37' ##'B8:27:EB:30:A8:38'
             port = 3
             s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
             s.connect((serverMACAddress, port))
@@ -256,7 +256,7 @@ if __name__ == "__main__":
     	    mac = open('/sys/class/net/eth0/address').read()
 	    myMac = mac.split(":")
 
-    	    str = 'data=mac_' 
+    	    str = 'DVTYPE=1%%MSGTYPE=2%%DATA=mac_' 
 	    str += ''.join(myMac)
 	    str += '&&img_' + sendImage
 	    print(str)
@@ -267,16 +267,17 @@ if __name__ == "__main__":
             print("clear")
 
             s.close()
-            bl.disconnect("B8:27:EB:30:A8:38")
-	    
+            bl.disconnect('B8:27:EB:80:FB:37') ##"B8:27:EB:30:A8:38")
+	    print("disconnect??????")
+
     	    stdoutdata = commands.getoutput("hcitool con")
 	    print(stdoutdata.split())
 
 	    ##connection state check##
-	    if not "B8:27:EB:30:A8:38" in stdoutdata.split():
+	    if "ENCRYPT" in stdoutdata.split():
                 print("disconnect!")
 				
-		for i in range(0, 30)
+		for i in range(0, 30):
 		    print i
 		    time.sleep(1)
 		    
