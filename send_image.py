@@ -240,10 +240,13 @@ if __name__ == "__main__":
      
             print("send image")
 
-            serverMACAddress = 'B8:27:EB:80:FB:37' ##'B8:27:EB:30:A8:38'
-            port = 3
-            s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
-            s.connect((serverMACAddress, port))
+	    try:
+            	serverMACAddress = 'B8:27:EB:80:FB:37' ##'B8:27:EB:30:A8:38'
+            	port = 3
+            	s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
+            	s.connect((serverMACAddress, port))
+	    except:
+		continue
 
             ## send file ##
 
@@ -257,7 +260,9 @@ if __name__ == "__main__":
 	    myMac = mac.split(":")
 
     	    str = 'DVTYPE=1%%MSGTYPE=2%%DATA=mac_' 
-	    str += ''.join(myMac)
+	    tmp = ''.join(myMac)
+	    tmp = tmp.split("\n")
+	    str += tmp[0]
 	    str += '&&img_' + sendImage
 	    print(str)
 	
